@@ -4,7 +4,7 @@ import SwiftUI
 struct SignQuestApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            WordPlayView()
         }
     }
 }

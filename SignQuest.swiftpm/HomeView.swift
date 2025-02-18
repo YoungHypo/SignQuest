@@ -20,35 +20,6 @@ struct HomeView: View {
     @State private var showingHandTalk = false
     @State private var showingWordPlay = false
     
-    private func testASLModel() {
-        do {
-            let config = MLModelConfiguration()
-            config.computeUnits = .cpuAndGPU
-            
-            // 异步加载模型
-            ASLRecognizer.load(configuration: config) { result in
-                switch result {
-                case .success(let model):
-                    print("ASL模型加载成功！")
-                    // 创建一个测试用的空数组来验证模型
-                    let shape = [1, 3, 21]
-                    if let testArray = try? MLMultiArray(shape: shape as [NSNumber], dataType: .float32) {
-                        do {
-                            _ = try model.prediction(poses: testArray)
-                            print("模型可以正常接收输入数据")
-                        } catch {
-                            print("模型预测测试失败: \(error.localizedDescription)")
-                        }
-                    }
-                case .failure(let error):
-                    print("ASL模型加载失败: \(error.localizedDescription)")
-                }
-            }
-        } catch {
-            print("初始化配置失败: \(error.localizedDescription)")
-        }
-    }
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -118,11 +89,6 @@ struct HomeView: View {
                 }
             }
             .navigationBarHidden(true)
-        }
-        
-        // 在适当的位置添加一个测试按钮
-        Button("测试ASL模型") {
-            testASLModel()
         }
     }
 }
