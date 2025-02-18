@@ -1,3 +1,10 @@
+//
+//  HomeView.swift
+//  SignQuest
+//
+//  Created by YoungHypo on 2/7/25
+//
+
 import SwiftUI
 #if targetEnvironment(macCatalyst)
 import UIKit
@@ -5,7 +12,7 @@ import UIKit
 extension UIWindowScene {
     func setWindowFrame() {
         guard let window = windows.first else { return }
-        let size = CGSize(width: 520, height: 1050)
+        let size = CGSize(width: 550, height: 1080)
         let frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         
         // set the minimum and maximum size to the same value, so the window cannot be resized
@@ -24,7 +31,7 @@ extension UIWindowScene {
 struct SignQuestApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            SignSchoolView()
                 .onAppear {
                     #if targetEnvironment(macCatalyst)
                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {

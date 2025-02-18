@@ -32,7 +32,7 @@ struct SignSchoolView: View {
     
     var body: some View {
         ZStack {
-            VStack(spacing: 20) {
+            VStack(spacing: 15) {
                 // Navigation bar
                 HStack {
                     NavigationButton(
@@ -47,13 +47,13 @@ struct SignSchoolView: View {
                     Button(action: {
                         showingLetterPicker = true
                     }) {
-                        HStack(spacing: 15) {
+                        HStack(spacing: 10) {
                             Text("Letter:")
-                                .font(.system(size: 28, weight: .bold))
+                                .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.black)
                                 .offset(x: labelOffset)
                             Text(currentLetter)
-                                .font(.system(size: 32, weight: .bold))
+                                .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.blue)
                                 .scaleEffect(letterScale)
                                 .opacity(letterOpacity)
@@ -62,11 +62,11 @@ struct SignSchoolView: View {
                                     axis: (x: 0.0, y: 1.0, z: 0.0)
                                 )
                             Image(systemName: "chevron.down")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.blue)
                         }
-                        .padding(.horizontal, 25)
-                        .padding(.vertical, 12)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 10)
                     }
                     
                     Spacer()
@@ -77,18 +77,18 @@ struct SignSchoolView: View {
                         action: performLetterTransition
                     )
                 }
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
+                .padding(.horizontal, 10)
+                .padding(.top, 10)
                 .disabled(showingBalloons)
                 
                 // Camera/AR view
                 ZStack {
                     if isARMode {
                         HandModelView(currentLetter: currentLetter)
-                            .frame(maxWidth: UIScreen.main.bounds.width * 0.9)
-                            .frame(height: UIScreen.main.bounds.height * 0.65)
+                            .frame(width: 500)
+                            .frame(height: 400)
                             .background(Color(UIColor.secondarySystemBackground))
-                            .cornerRadius(25)
+                            .cornerRadius(20)
                     } else {
                         CameraView(prediction: Binding(
                             get: { prediction },
@@ -97,10 +97,10 @@ struct SignSchoolView: View {
                                 handlePredictionChange(newValue)
                             }
                         ))
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.9)
-                        .frame(height: UIScreen.main.bounds.height * 0.65)
+                        .frame(width: 500)
+                        .frame(height: 400)
                         .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(25)
+                        .cornerRadius(20)
                     }
                     
                     // Loading overlay
@@ -117,6 +117,8 @@ struct SignSchoolView: View {
                             }
                         }
                         .transition(.opacity)
+                        .frame(width: 500)
+                        .frame(height: 400)
                     }
                     
                     // Balloons animation overlay
@@ -129,7 +131,6 @@ struct SignSchoolView: View {
                     
                     // AR toggle button
                     VStack {
-                        Spacer()
                         HStack {
                             Spacer()
                             Button(action: {
@@ -158,63 +159,65 @@ struct SignSchoolView: View {
                                 }
                             }) {
                                 Image(systemName: isARMode ? "camera.fill" : "arkit")
-                                    .font(.system(size: 30))
+                                    .font(.system(size: 24))
                                     .foregroundColor(.white)
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: 50, height: 50)
                                     .background(
                                         Circle()
                                             .fill(Color.black.opacity(0.3))
-                                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 3)
+                                            .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
                                     )
                             }
-                            .padding(25)
+                            .padding(10)
                             .disabled(isLoadingAR)
                         }
                     }
+                    .padding(.top, 330)
                 }
                 .padding(.horizontal, 30)
                 
+
+                Spacer()
+                
                 // Bottom section
-                VStack(spacing: 25) {
+                VStack(spacing: 20) {
                     // Prediction label
                    if let prediction = prediction {
-                        HStack(spacing: 20) {
+                        HStack(spacing: 15) {
                             Text(prediction.label)
-                                .font(.system(size: 28, weight: .bold))
+                                .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(prediction.label == currentLetter ? .green : .primary)
                             Text(String(format: "%.1f%%", prediction.confidence * 100))
-                                .font(.system(size: 28))
+                                .font(.system(size: 20))
                                 .foregroundColor(.secondary)
                         }
-                        .frame(width: UIScreen.main.bounds.width * 0.6, height: 40)
-                        .padding(.vertical, 15)
+                        .frame(width: 300, height: 40)
+                        .padding(.vertical, 12)
                         .background(
-                            RoundedRectangle(cornerRadius: 20)
+                            RoundedRectangle(cornerRadius: 16)
                                 .fill(Color(UIColor.secondarySystemBackground))
                         )
                     } else {
                         Text("Waiting for gesture...")
-                            .font(.system(size: 28))
+                            .font(.system(size: 20))
                             .foregroundColor(.secondary)
-                            .frame(width: UIScreen.main.bounds.width * 0.6, height: 40)
-                            .padding(.vertical, 15)
+                            .frame(width: 300, height: 40)
+                            .padding(.vertical, 12)
                             .background(
-                                RoundedRectangle(cornerRadius: 20)
+                                RoundedRectangle(cornerRadius: 16)
                                     .fill(Color(UIColor.secondarySystemBackground))
                             )
                     }
                     
                     // Hint button
                     Button(action: { showingTip = true }) {
-                        HStack(spacing: 25) {
+                        HStack(spacing: 20) {
                             Image(systemName: "lightbulb.fill")
-                                .font(.system(size: 28))
-                            Text("Show Hint")
-                                .font(.system(size: 28, weight: .bold))
+                                .font(.system(size: 24))
                         }
-                        .frame(width: UIScreen.main.bounds.width * 0.6, height: 80)
+                        .frame(width: 80, height: 50)
                         .background(
-                            RoundedRectangle(cornerRadius: 20)
+                            RoundedRectangle(cornerRadius: 16)
                                 .fill(
                                     LinearGradient(
                                         gradient: Gradient(colors: [
@@ -227,16 +230,16 @@ struct SignSchoolView: View {
                                 )
                                 .shadow(
                                     color: Color.blue.opacity(0.3),
-                                    radius: 15,
+                                    radius: 12,
                                     x: 0,
-                                    y: 8
+                                    y: 6
                                 )
                         )
                         .foregroundColor(.white)
                     }
                 }
-                .padding(.horizontal, 30)
-                .padding(.bottom, 40)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 30)
             }
         }
         .navigationBarHidden(true)
@@ -358,19 +361,15 @@ struct NavigationButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 10) {
+            HStack(spacing: 8) {
                 Image(systemName: icon)
-                    .font(.system(size: 28, weight: .regular))
+                    .font(.system(size: 20, weight: .regular))
                 Text(title)
-                    .font(.system(size: 28))
+                    .font(.system(size: 20))
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 15)
+            .padding(.horizontal, 15)
+            .padding(.vertical, 12)
             .foregroundColor(.primary)
         }
     }
-}
-
-#Preview {
-    SignSchoolView()
 }
