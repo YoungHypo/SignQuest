@@ -20,6 +20,8 @@ struct HandTalkView: View {
     @State private var lastPrediction: String?
     @State private var cameraWidth: CGFloat = 500
     @State private var cameraHeight: CGFloat = 360
+    @State private var dictionaryOffset: CGFloat = UIScreen.main.bounds.height
+    @State private var selectedLetter = "A"
     
     // add a struct to track the display status of each letter
     struct LetterDisplay: Identifiable {
@@ -29,6 +31,8 @@ struct HandTalkView: View {
     }
     
     @State private var activeLetters: [LetterDisplay] = []
+    
+    private let letters = Array("ABCDEFGHIKLMNOPQRSTUVWXY").map(String.init)
     
     var body: some View {
         ZStack {
@@ -48,13 +52,15 @@ struct HandTalkView: View {
                     
                     Spacer()
                     
-                    // add a empty NavigationButton to keep the symmetry
                     NavigationButton(
-                        icon: "chevron.right",
-                        title: "Next",
-                        action: {}
+                        icon: "text.magnifyingglass",
+                        title: "Dict",
+                        action: {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                dictionaryOffset = 0
+                            }
+                        }
                     )
-                    .opacity(0)
                 }
                 .padding(.horizontal, 10)
                 .padding(.top, 20)
@@ -230,6 +236,8 @@ struct HandTalkView: View {
                 
                 Spacer()
             }
+            
+            dictionaryLayer
         }
         .navigationBarHidden(true)
         .onDisappear {
@@ -269,6 +277,88 @@ struct HandTalkView: View {
             matchStartTime = nil
             lastPrediction = nil
         }
+    }
+    
+    private var dictionaryLayer: some View {
+        ZStack {
+            // transparent background
+            if dictionaryOffset < UIScreen.main.bounds.height {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            dictionaryOffset = UIScreen.main.bounds.height
+                        }
+                    }
+            }
+            
+            VStack(spacing: 20) {
+                // title bar
+                HStack {
+                    Spacer()
+                    Text("ASL Dictionary")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            dictionaryOffset = UIScreen.main.bounds.height
+                        }
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.gray)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top)
+                
+                // Letters grid
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 4), spacing: 15) {
+                    ForEach(letters, id: \.self) { letter in
+                        Button(action: {
+                            selectedLetter = letter
+                        }) {
+                            Text(letter)
+                                .font(.system(size: 24, weight: .bold))
+                                .frame(width: 60, height: 60)
+                                .background(letter == selectedLetter ? Color.blue : Color(UIColor.secondarySystemBackground))
+                                .foregroundColor(letter == selectedLetter ? .white : .primary)
+                                .cornerRadius(15)
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                
+                // Selected letter image
+                VStack(spacing: 15) {
+                    Text(selectedLetter)
+                        .font(.system(size: 48, weight: .bold))
+                        .foregroundColor(.blue)
+                    
+                    Image(selectedLetter)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                        .padding()
+                }
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color(UIColor.secondarySystemBackground))
+                )
+                .padding(.horizontal)
+                
+                Spacer()
+            }
+            .frame(width: 500)
+            .frame(height: 840)
+            .background(Color(UIColor.systemBackground))
+            .cornerRadius(25)
+            .shadow(radius: 10)
+            .offset(y: dictionaryOffset)
+        }
+        .ignoresSafeArea()
     }
 }
 

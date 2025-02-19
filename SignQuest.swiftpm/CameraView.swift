@@ -128,7 +128,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 let handPosePrediction = try model.prediction(poses: keypointsMultiArray)
                 
                 if let highestPrediction = handPosePrediction.labelProbabilities
-                    .filter({ $0.value >= 0.9 })
+                    .filter({ $0.value >= 0.85 })
                     .max(by: { $0.value < $1.value }) {
                     DispatchQueue.main.async {
                         self.predictionBinding.wrappedValue = (label: highestPrediction.key, confidence: highestPrediction.value)

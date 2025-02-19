@@ -106,7 +106,11 @@ struct WordPlayView: View {
                             Image(systemName: "text.cursor")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Sign each blue letter in sequence to spell the word 🔍")
+                            Text("Sign each ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("blue letter")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text(" in sequence to spell the word 🔍")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         

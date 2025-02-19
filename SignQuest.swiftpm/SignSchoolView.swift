@@ -134,11 +134,11 @@ struct SignSchoolView: View {
                             Image(systemName: "lightbulb.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Tap the ")
+                            Text("Tap the bottom ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("hint")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" button below for detailed instructions 💡")
+                            Text(" button for gesture details 💡")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -268,7 +268,7 @@ struct SignSchoolView: View {
                                         .foregroundColor(.white)
                                 }
                             }
-                            .padding(10)
+                            .padding(20)
                             .disabled(isLoadingAR)
                         }
                     }
