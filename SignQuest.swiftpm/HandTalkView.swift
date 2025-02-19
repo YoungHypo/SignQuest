@@ -18,6 +18,8 @@ struct HandTalkView: View {
     @State private var isEditing = false
     @State private var matchStartTime: Date?
     @State private var lastPrediction: String?
+    @State private var cameraWidth: CGFloat = 500
+    @State private var cameraHeight: CGFloat = 360
     
     // add a struct to track the display status of each letter
     struct LetterDisplay: Identifiable {
@@ -42,7 +44,7 @@ struct HandTalkView: View {
                     Spacer()
                     
                     Text("Hand Talk")
-                        .font(.title3.bold())
+                        .font(.system(size: 24, weight: .bold))
                     
                     Spacer()
                     
@@ -54,8 +56,79 @@ struct HandTalkView: View {
                     )
                     .opacity(0)
                 }
-                .padding(.horizontal)
-                .padding(.top, 27)
+                .padding(.horizontal, 10)
+                .padding(.top, 20)
+                
+                // Introduction section
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Start free spelling with your hands! 🗣️")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    VStack(alignment: .leading, spacing: 15) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "hand.wave.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Use your ASL skills to spell words freely in TextEditor below")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+
+                        HStack(spacing: 10) {
+                            Image(systemName: "hands.sparkles.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Keep your hand steady for at least ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("0.8 seconds ")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text("✨")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+                        
+                        HStack(spacing: 10) {
+                            Image(systemName: "square.and.pencil")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Use ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("Delete")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text(", ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("Space")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text(" and ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("Clear")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text(" to edit your text ✏️")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+
+                        // Add dictionary lookup instruction
+                        HStack(spacing: 10) {
+                            Image(systemName: "book.circle.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Check ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("Dictionary")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text(" in navigation bar for sign gestures 📚")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+                    }
+                    .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color(UIColor.secondarySystemBackground))
+                )
+                .padding(.horizontal, 30)
                 
                 // Camera view with 3D letters overlay
                 ZStack {
@@ -66,8 +139,10 @@ struct HandTalkView: View {
                             handlePredictionChange(newValue)
                         }
                     ))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: UIScreen.main.bounds.height * 0.5)
+                    .frame(width: cameraWidth)
+                    .frame(height: cameraHeight)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(20)
                     
                     // display all active 3D letters
                     ForEach(activeLetters) { letterDisplay in
@@ -76,24 +151,22 @@ struct HandTalkView: View {
                             .allowsHitTesting(false)
                     }
                 }
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(20)
-                .padding()
-                .clipped()
+                .padding(.horizontal, 30)
+                .padding(.top, 10)
                 
                 // Bottom section
-                VStack(spacing: 20) {
+                VStack(spacing: 28) {
                     // Prediction label
                     if let prediction = prediction {
-                        HStack {
+                        HStack(spacing: 15) {
                             Text(prediction.label)
-                                .font(.title3.bold())
+                                .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.primary)
                             Text(String(format: "%.1f%%", prediction.confidence * 100))
-                                .font(.headline)
+                                .font(.system(size: 20))
                                 .foregroundColor(.secondary)
                         }
-                        .frame(width: UIScreen.main.bounds.width * 0.7, height: 30)
+                        .frame(width: 300, height: 40)
                         .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
@@ -101,21 +174,21 @@ struct HandTalkView: View {
                         )
                     } else {
                         Text("Waiting for gesture...")
-                            .font(.headline)
+                            .font(.system(size: 20))
                             .foregroundColor(.secondary)
-                            .frame(width: UIScreen.main.bounds.width * 0.7, height: 30)
+                            .frame(width: 300, height: 40)
                             .padding(.vertical, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 16)
                                     .fill(Color(UIColor.secondarySystemBackground))
-                        )
+                            )
                     }
                     
                     // Text editor
                     TextEditor(text: $translatedText)
-                        .font(.system(size: 18))
-                        .frame(width: UIScreen.main.bounds.width * 0.66, height: 80)
-                        .padding(10)
+                        .font(.system(size: 20))
+                        .frame(width: 300, height: 100)
+                        .padding(15)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
                                 .fill(Color(UIColor.secondarySystemBackground))
@@ -127,7 +200,7 @@ struct HandTalkView: View {
                         .disableTextEditorEditing()
                     
                     // Control buttons
-                    HStack(spacing: 50) {
+                    HStack(spacing: 55) {
                         ControlButton(
                             icon: "delete.left.fill",
                             color: .red
@@ -152,8 +225,10 @@ struct HandTalkView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 25)
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                
+                Spacer()
             }
         }
         .navigationBarHidden(true)

@@ -98,7 +98,7 @@ struct WordPlayView: View {
                             Image(systemName: "hand.point.up.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Use your ASL skills to complete each level")
+                            Text("Use your ASL skills to complete each level ✨")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -106,7 +106,7 @@ struct WordPlayView: View {
                             Image(systemName: "text.cursor")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Sign each blue letter in sequence to spell the word")
+                            Text("Sign each blue letter in sequence to spell the word 🔍")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -118,7 +118,7 @@ struct WordPlayView: View {
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Next")
                                 .font(.system(size: 16, weight: .bold)) +
-                            Text(" or level picker")
+                            Text(" or level picker 🧭")
                                 .font(.system(size: 16, weight: .regular))
                         }
 
@@ -126,7 +126,7 @@ struct WordPlayView: View {
                             Image(systemName: "hands.sparkles.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Ready? Start in Camera View below")
+                            Text("Ready? Start in Camera View below 🚀")
                                 .font(.system(size: 16, weight: .regular))
                         }
                     }

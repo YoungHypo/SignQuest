@@ -126,7 +126,7 @@ struct SignSchoolView: View {
                             Image(systemName: "hand.point.up.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Practice ASL alphabet signs through interactive learning")
+                            Text("Practice ASL alphabet signs through interactive learning ✨")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -138,7 +138,7 @@ struct SignSchoolView: View {
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("hint")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" button below for detailed instructions")
+                            Text(" button below for detailed instructions 💡")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -150,7 +150,7 @@ struct SignSchoolView: View {
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("AR icon")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" in Camera view")
+                            Text(" in Camera view 📸")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -162,7 +162,7 @@ struct SignSchoolView: View {
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Next")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" or letter picker")
+                            Text(" or letter picker 🧭")
                                 .font(.system(size: 16, weight: .regular))
                         }
                     }
