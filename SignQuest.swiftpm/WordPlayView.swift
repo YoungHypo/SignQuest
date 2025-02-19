@@ -19,9 +19,12 @@ struct WordPlayView: View {
     @State private var matchStartTime: Date?
     @State private var lastPrediction: String?
     @State private var showingBalloons = false
+    @State private var cameraWidth: CGFloat = 500
+    @State private var cameraHeight: CGFloat = 500
+    @State private var levelPickerOffset: CGFloat = UIScreen.main.bounds.height
     
     // game level settings
-    private let levels = ["LOVE", "APPLE", "WWDC", "LAKE", "BABY"]
+    private let levels = ["HELLO", "WORLD", "APPLE", "WWDC", "LAKE", "BABY"]
     
     // current word
     private var currentWord: String {
@@ -36,7 +39,7 @@ struct WordPlayView: View {
     }
     
     @State private var activeLetters: [LetterDisplay] = []
-    
+
     var body: some View {
         ZStack {
             VStack(spacing: 15) {
@@ -52,19 +55,23 @@ struct WordPlayView: View {
                     
                     // Level picker button
                     Button(action: {
-                        showingLevelPicker = true
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            levelPickerOffset = 0
+                        }
                     }) {
                         HStack(spacing: 8) {
                             Text("Level \(currentLevel + 1):")
-                                .font(.title3.bold())
+                                .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.black)
                             Text(levels[currentLevel])
-                                .font(.title3.bold())
+                                .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(.blue)
                             Image(systemName: "chevron.down")
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.blue)
                         }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 10)
                     }
                     
                     Spacer()
@@ -75,9 +82,63 @@ struct WordPlayView: View {
                         action: nextLevel
                     )
                 }
-                .padding(.horizontal)
-                .padding(.top, 12)
+                .padding(.horizontal, 10)
+                .padding(.top, 20)
                 .disabled(showingBalloons)
+                
+                // Introduction section
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Game Time! 🎮")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    VStack(alignment: .leading, spacing: 15) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "hand.point.up.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Use your ASL skills to complete each level")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+                        
+                        HStack(spacing: 10) {
+                            Image(systemName: "text.cursor")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Sign each blue letter in sequence to spell the word")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+                        
+                        HStack(spacing: 10) {
+                            Image(systemName: "gamecontroller.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Navigate levels using ")
+                                .font(.system(size: 16, weight: .regular)) +
+                            Text("Next")
+                                .font(.system(size: 16, weight: .bold)) +
+                            Text(" or level picker")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+
+                        HStack(spacing: 10) {
+                            Image(systemName: "hands.sparkles.fill")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("Ready? Start in Camera View below")
+                                .font(.system(size: 16, weight: .regular))
+                        }
+                    }
+                    .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color(UIColor.secondarySystemBackground))
+                )
+                .padding(.horizontal, 30)
                 
                 // Camera view with overlays
                 ZStack {
@@ -88,8 +149,10 @@ struct WordPlayView: View {
                             handlePredictionChange(newValue)
                         }
                     ))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: UIScreen.main.bounds.height * 0.6)
+                    .frame(width: cameraWidth)
+                    .frame(height: cameraHeight)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(20)
                     
                     // display all active 3D letters
                     ForEach(activeLetters) { letterDisplay in
@@ -101,33 +164,32 @@ struct WordPlayView: View {
                     // Balloons animation overlay
                     if showingBalloons {
                         BalloonView(startPosition: -5)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: UIScreen.main.bounds.height * 0.6)
+                            .frame(width: cameraWidth)
+                            .frame(height: cameraHeight)
                             .clipped()
                     }
                 }
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(20)
-                .padding()
-                
+                .padding(.horizontal, 30)
+                .padding(.top, 10)
+
                 // Bottom section
-                VStack(spacing: 20) {
+                VStack(spacing: 30) {
                     // Prediction label
                     if let prediction = prediction {
-                        HStack {
+                        HStack(spacing: 15) {
                             Text(prediction.label)
-                                .font(.title3.bold())
+                                .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(
-                                    currentLetterIndex < currentWord.count && // check if the current letter index is less than the current word count
+                                    currentLetterIndex < currentWord.count &&
                                     prediction.label == String(currentWord[currentWord.index(currentWord.startIndex, offsetBy: currentLetterIndex)])
                                     ? .green
                                     : .primary
                                 )
                             Text(String(format: "%.1f%%", prediction.confidence * 100))
-                                .font(.headline)
+                                .font(.system(size: 20))
                                 .foregroundColor(.secondary)
                         }
-                        .frame(width: UIScreen.main.bounds.width * 0.7, height: 30)
+                        .frame(width: 300, height: 40)
                         .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
@@ -135,16 +197,16 @@ struct WordPlayView: View {
                         )
                     } else {
                         Text("Waiting for gesture...")
-                            .font(.headline)
+                            .font(.system(size: 20))
                             .foregroundColor(.secondary)
-                            .frame(width: UIScreen.main.bounds.width * 0.7, height: 30)
+                            .frame(width: 300, height: 40)
                             .padding(.vertical, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 16)
                                     .fill(Color(UIColor.secondarySystemBackground))
                             )
                     }
-                    
+
                     // Word display
                     HStack(spacing: 12) {
                         ForEach(Array(currentWord.enumerated()), id: \.offset) { index, letter in
@@ -159,18 +221,107 @@ struct WordPlayView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 30)
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+
+                Spacer()
             }
+            
+            levelPickerLayer
         }
         .navigationBarHidden(true)
-        .sheet(isPresented: $showingLevelPicker) {
-            LevelPickerView(selectedLevel: $currentLevel, levels: levels)
-        }
         .onDisappear {
             matchStartTime = nil
             lastPrediction = nil
         }
+    }
+    
+    private var levelPickerLayer: some View {
+        ZStack {
+            // transparent background
+            if levelPickerOffset < UIScreen.main.bounds.height {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            levelPickerOffset = UIScreen.main.bounds.height
+                        }
+                    }
+            }
+            
+            VStack(spacing: 0) {
+                // title bar
+                HStack {
+                    Spacer()
+                    Text("Choose Level")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            levelPickerOffset = UIScreen.main.bounds.height
+                        }
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.gray)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top)
+                .padding(.bottom, 10)
+                
+                // level list
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ForEach(Array(levels.enumerated()), id: \.offset) { index, word in
+                            Button(action: {
+                                currentLevel = index
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                    levelPickerOffset = UIScreen.main.bounds.height
+                                }
+                            }) {
+                                HStack {
+                                    Text("Level \(index + 1)")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.primary)
+                                    Text(word)
+                                        .font(.system(size: 20, weight: .bold))
+                                        .foregroundColor(.blue)
+                                    Spacer()
+                                    if index == currentLevel {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.blue)
+                                            .font(.system(size: 20))
+                                    }
+                                }
+                                .padding(.horizontal)
+                                .padding(.vertical, 12)
+                                .background(
+                                    Rectangle()
+                                        .fill(Color(UIColor.secondarySystemBackground))
+                                        .opacity(index == currentLevel ? 0.5 : 0)
+                                )
+                            }
+                            
+                            if index < levels.count - 1 {
+                                Divider()
+                                    .padding(.horizontal)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 8)
+                }
+                .background(Color(UIColor.systemBackground))
+            }
+            .frame(width: 500)
+            .frame(height: 500)
+            .background(Color(UIColor.systemBackground))
+            .cornerRadius(25)
+            .shadow(radius: 10)
+            .offset(y: levelPickerOffset)
+        }
+        .ignoresSafeArea()
     }
     
     private func handlePredictionChange(_ newPrediction: (label: String, confidence: Double)?) {
@@ -254,48 +405,6 @@ struct WordPlayView: View {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             showingBalloons = false
-        }
-    }
-}
-
-// level picker view
-struct LevelPickerView: View {
-    @Environment(\.presentationMode) var presentationMode
-    @Binding var selectedLevel: Int
-    let levels: [String]
-    
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(Array(levels.enumerated()), id: \.offset) { index, word in
-                    Button(action: {
-                        selectedLevel = index
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        HStack {
-                            Text("Level \(index + 1)")
-                                .foregroundColor(.primary)
-                            Text(word)
-                                .foregroundColor(.blue)
-                                .font(.headline)
-                            Spacer()
-                            if index == selectedLevel {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.blue)
-                            }
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Choose Level")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
         }
     }
 }
