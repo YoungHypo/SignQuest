@@ -478,7 +478,7 @@ struct SignSchoolView: View {
                                     endPoint: .bottomTrailing
                                 )
                             )
-                            .padding(.top, 20)
+                            .padding(.top, 10)
                         
                         // divider
                         Rectangle()
@@ -505,6 +505,18 @@ struct SignSchoolView: View {
                                 .fill(Color(UIColor.secondarySystemBackground))
                         )
                         .padding(.horizontal)
+
+                        // Add practice encouragement
+                        VStack(spacing: 8) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "hands.sparkles.fill")
+                                    .foregroundColor(.blue)
+                                Text("Practice in Camera View 🔔")
+                                    .font(.system(size: 20, weight: .semibold))
+                            }
+                            Text("🎯 Keep your hand steady ✨")
+                                .font(.system(size: 20, weight: .semibold))
+                        }
                         
                         // Add hand pose image
                         Image("\(currentLetter)")
@@ -517,7 +529,7 @@ struct SignSchoolView: View {
                 }
             }
             .frame(width: 500)
-            .frame(height: 700)
+            .frame(height: 760)
             .background(Color(UIColor.systemBackground))
             .cornerRadius(25)
             .shadow(radius: 10)
