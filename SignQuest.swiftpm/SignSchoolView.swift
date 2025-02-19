@@ -27,6 +27,7 @@ struct SignSchoolView: View {
     @State private var isARMode = false
     @State private var isLoadingAR = false
     @State private var showingBalloons = false
+    @State private var letterPickerOffset: CGFloat = UIScreen.main.bounds.height
     
     private let letters = Array("ABCDEFGHIKLMNOPQRSTUVWXY").map(String.init)
     
@@ -45,7 +46,9 @@ struct SignSchoolView: View {
                     
                     // Letter picker button with animation
                     Button(action: {
-                        showingLetterPicker = true
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            letterPickerOffset = 0
+                        }
                     }) {
                         HStack(spacing: 10) {
                             Text("Letter:")
@@ -124,8 +127,8 @@ struct SignSchoolView: View {
                     // Balloons animation overlay
                     if showingBalloons {
                         BalloonView(startPosition: -5)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: UIScreen.main.bounds.height * 0.6)
+                            .frame(width: 500)
+                            .frame(height: 400)
                             .clipped()
                     }
                     
@@ -241,16 +244,90 @@ struct SignSchoolView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 30)
             }
+            
+            letterPickerLayer
         }
         .navigationBarHidden(true)
-        .sheet(isPresented: $showingLetterPicker) {
-            LetterPickerView(selectedLetter: $currentLetter,
-                             isARMode: $isARMode,
-                             letters: letters)
-        }
         .sheet(isPresented: $showingTip) {
             TipView(letter: currentLetter)
         }
+    }
+    
+    private var letterPickerLayer: some View {
+        ZStack {
+            // transparent background
+            if letterPickerOffset < UIScreen.main.bounds.height {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            letterPickerOffset = UIScreen.main.bounds.height
+                        }
+                    }
+            }
+            
+            VStack(spacing: 20) {
+                HStack {
+                    Spacer()
+                    Text("Select Letter")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            letterPickerOffset = UIScreen.main.bounds.height
+                        }
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.gray)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 4), spacing: 30) {
+                    ForEach(letters, id: \.self) { letter in
+                        Button(action: {
+                            if isARMode {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    isARMode = false
+                                }
+                                // delay a short time to wait for the camera view to load
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    currentLetter = letter
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                        letterPickerOffset = UIScreen.main.bounds.height
+                                    }
+                                }
+                            } else {
+                                currentLetter = letter
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                    letterPickerOffset = UIScreen.main.bounds.height
+                                }
+                            }
+                        }) {
+                            Text(letter)
+                                .font(.system(size: 24, weight: .bold))
+                                .frame(width: 60, height: 60)
+                                .background(letter == currentLetter ? Color.blue : Color(UIColor.secondarySystemBackground))
+                                .foregroundColor(letter == currentLetter ? .white : .primary)
+                                .cornerRadius(15)
+                        }
+                    }
+                }
+                .padding()
+                
+                Spacer()
+            }
+            .frame(width: 500)
+            .frame(height: 650)
+            .background(Color(UIColor.systemBackground))
+            .cornerRadius(25)
+            .shadow(radius: 10)
+            .offset(y: letterPickerOffset)
+        }
+        .ignoresSafeArea()
     }
     
     // detecting the prediction
