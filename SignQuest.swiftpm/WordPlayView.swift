@@ -15,7 +15,6 @@ struct WordPlayView: View {
     @State private var prediction: (label: String, confidence: Double)?
     @State private var currentLevel = 0 // current level
     @State private var currentLetterIndex = 0 // current letter index
-    @State private var showingLevelPicker = false
     @State private var matchStartTime: Date?
     @State private var lastPrediction: String?
     @State private var showingBalloons = false
@@ -98,7 +97,8 @@ struct WordPlayView: View {
                             Image(systemName: "hand.point.up.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Use your ASL skills to complete each level ✨")
+                                .frame(width: 20)
+                            Text("Use your ASL skills to complete each level")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -106,11 +106,12 @@ struct WordPlayView: View {
                             Image(systemName: "text.cursor")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Sign each ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("blue letter")
                                 .font(.system(size: 16, weight: .bold)) +
-                            Text(" in sequence to spell the word 🔍")
+                            Text(" in sequence to spell the word")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -118,11 +119,12 @@ struct WordPlayView: View {
                             Image(systemName: "gamecontroller.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Navigate levels using ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Next")
                                 .font(.system(size: 16, weight: .bold)) +
-                            Text(" or level picker 🧭")
+                            Text(" or level picker")
                                 .font(.system(size: 16, weight: .regular))
                         }
 
@@ -130,7 +132,8 @@ struct WordPlayView: View {
                             Image(systemName: "hands.sparkles.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Ready? Start in Camera View below 🚀")
+                                .frame(width: 20)
+                            Text("Ready? Start in Camera View below")
                                 .font(.system(size: 16, weight: .regular))
                         }
                     }
@@ -281,6 +284,7 @@ struct WordPlayView: View {
                         ForEach(Array(levels.enumerated()), id: \.offset) { index, word in
                             Button(action: {
                                 currentLevel = index
+                                currentLetterIndex = 0
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                                     levelPickerOffset = UIScreen.main.bounds.height
                                 }

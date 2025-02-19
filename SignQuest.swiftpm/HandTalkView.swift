@@ -77,6 +77,7 @@ struct HandTalkView: View {
                             Image(systemName: "hand.wave.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Use your ASL skills to spell words freely in TextEditor below")
                                 .font(.system(size: 16, weight: .regular))
                         }
@@ -85,18 +86,18 @@ struct HandTalkView: View {
                             Image(systemName: "hands.sparkles.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Keep your hand steady for at least ")
                                 .font(.system(size: 16, weight: .regular)) +
-                            Text("0.8 seconds ")
-                                .font(.system(size: 16, weight: .bold)) +
-                            Text("✨")
-                                .font(.system(size: 16, weight: .regular))
+                            Text("0.8 seconds")
+                                .font(.system(size: 16, weight: .bold))
                         }
                         
                         HStack(spacing: 10) {
                             Image(systemName: "square.and.pencil")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Use ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Delete")
@@ -109,7 +110,7 @@ struct HandTalkView: View {
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Clear")
                                 .font(.system(size: 16, weight: .bold)) +
-                            Text(" to edit your text ✏️")
+                            Text(" to edit your text")
                                 .font(.system(size: 16, weight: .regular))
                         }
 
@@ -118,11 +119,12 @@ struct HandTalkView: View {
                             Image(systemName: "book.circle.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Check ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Dictionary")
                                 .font(.system(size: 16, weight: .bold)) +
-                            Text(" in navigation bar for sign gestures 📚")
+                            Text(" in navigation bar for sign gestures")
                                 .font(.system(size: 16, weight: .regular))
                         }
                     }
@@ -194,7 +196,7 @@ struct HandTalkView: View {
                     TextEditor(text: $translatedText)
                         .font(.system(size: 20))
                         .frame(width: 300, height: 100)
-                        .padding(15)
+                        .padding(8)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
                                 .fill(Color(UIColor.secondarySystemBackground))

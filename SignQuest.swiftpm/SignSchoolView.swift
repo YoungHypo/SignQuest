@@ -126,7 +126,8 @@ struct SignSchoolView: View {
                             Image(systemName: "hand.point.up.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
-                            Text("Practice ASL alphabet signs through interactive learning ✨")
+                                .frame(width: 20)
+                            Text("Practice ASL alphabet signs through interactive learning")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -134,11 +135,12 @@ struct SignSchoolView: View {
                             Image(systemName: "lightbulb.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Tap the bottom ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("hint")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" button for gesture details 💡")
+                            Text(" button for gesture details")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -146,11 +148,12 @@ struct SignSchoolView: View {
                             Image(systemName: "arkit")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("View 360° 3D hand model by ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("AR icon")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" in Camera view 📸")
+                            Text(" in Camera view")
                                 .font(.system(size: 16, weight: .regular))
                         }
                         
@@ -158,11 +161,12 @@ struct SignSchoolView: View {
                             Image(systemName: "arrow.forward.circle.fill")
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
+                                .frame(width: 20)
                             Text("Navigate through letters using ")
                                 .font(.system(size: 16, weight: .regular)) +
                             Text("Next")
                                 .font(.system(size: 18, weight: .bold)) +
-                            Text(" or letter picker 🧭")
+                            Text(" or letter picker")
                                 .font(.system(size: 16, weight: .regular))
                         }
                     }
