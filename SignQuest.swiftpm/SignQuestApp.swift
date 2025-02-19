@@ -31,7 +31,7 @@ extension UIWindowScene {
 struct SignQuestApp: App {
     var body: some Scene {
         WindowGroup {
-            SignSchoolView()
+            HomeView()
                 .onAppear {
                     #if targetEnvironment(macCatalyst)
                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {

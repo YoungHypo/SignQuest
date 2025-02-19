@@ -17,6 +17,7 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 VStack(spacing: 10) {
+                    // hand wave logo and title
                     VStack(spacing: 40) {
                         Image(systemName: "hand.wave.fill")
                             .font(.system(size: 80))
@@ -48,6 +49,7 @@ struct HomeView: View {
                     
                     Spacer()
                     
+                    // main buttons
                     VStack(spacing: 40) {
                         MainButton(
                             title: "Sign School",
@@ -79,6 +81,15 @@ struct HomeView: View {
                     .padding(.bottom, 100)
                     
                     Spacer()
+
+                    // Add platform requirement notice
+                    VStack(spacing: 8) {
+                        Text("⚠️ This playground requires Mac Catalyst platform with camera access 📸")
+                            .font(.system(size: 14))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.bottom, 40)
                 }
             }
             .navigationBarHidden(true)
