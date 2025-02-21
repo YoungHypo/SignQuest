@@ -53,7 +53,7 @@ struct HandTalkView: View {
                     Spacer()
                     
                     NavigationButton(
-                        icon: "text.magnifyingglass",
+                        icon: "character.book.closed",
                         title: "Dict",
                         action: {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -151,6 +151,16 @@ struct HandTalkView: View {
                     .frame(height: cameraHeight)
                     .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(20)
+                    
+                    VStack {
+                        Text("Please position your palm towards the screen 🖐️")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.black.opacity(0.6))
+                            .cornerRadius(10)
+                            .padding(.bottom, 280)
+                    }
                     
                     // display all active 3D letters
                     ForEach(activeLetters) { letterDisplay in

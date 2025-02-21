@@ -188,6 +188,16 @@ struct SignSchoolView: View {
                             .frame(height: cameraHeight)
                             .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(20)
+
+                        VStack {
+                            Text("Tap Camera button below to return for gesture recognition 📸")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.black.opacity(0.6))
+                                .cornerRadius(10)
+                                .padding(.bottom, 400)
+                        }
                     } else {
                         CameraView(prediction: Binding(
                             get: { prediction },
@@ -200,6 +210,16 @@ struct SignSchoolView: View {
                         .frame(height: cameraHeight)
                         .background(Color(UIColor.secondarySystemBackground))
                         .cornerRadius(20)
+
+                        VStack {
+                            Text("Please position your palm towards the screen 🖐️")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.black.opacity(0.6))
+                                .cornerRadius(10)
+                                .padding(.bottom, 400)
+                        }
                     }
                     
                     // Loading overlay

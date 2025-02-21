@@ -160,6 +160,16 @@ struct WordPlayView: View {
                     .frame(height: cameraHeight)
                     .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(20)
+
+                    VStack {
+                        Text("Please position your palm towards the screen 🖐️")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.black.opacity(0.6))
+                            .cornerRadius(10)
+                            .padding(.bottom, 400)
+                    }                    
                     
                     // display all active 3D letters
                     ForEach(activeLetters) { letterDisplay in
