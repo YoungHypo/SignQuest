@@ -1,5 +1,5 @@
 //
-//  HandTalkView.swift
+//  HandSpellView.swift
 //  SignQuest
 //
 //  Created by YoungHypo on 2/7/25
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HandTalkView: View {
+struct HandSpellView: View {
     // Time constants
     private let recognitionDuration: TimeInterval = 0.8  // recognition duration
     private let letterDisplayDuration: TimeInterval = 0.8  // letter display duration
@@ -47,7 +47,7 @@ struct HandTalkView: View {
                     
                     Spacer()
                     
-                    Text("Hand Talk")
+                    Text("Hand Spell")
                         .font(.system(size: 24, weight: .bold))
                     
                     Spacer()
@@ -422,5 +422,5 @@ extension View {
 }
 
 #Preview {
-    HandTalkView()
+    HandSpellView()
 }

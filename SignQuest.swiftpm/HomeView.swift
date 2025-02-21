@@ -10,7 +10,7 @@ import CoreML
 
 struct HomeView: View {
     @State private var showingSignSchool = false
-    @State private var showingHandTalk = false
+    @State private var showingHandSpell = false
     @State private var showingWordPlay = false
     
     var body: some View {
@@ -70,12 +70,12 @@ struct HomeView: View {
                         }
                         
                         MainButton(
-                            title: "Hand Talk",
+                            title: "Hand Spell",
                             icon: "captions.bubble",
-                            action: { showingHandTalk = true }
+                            action: { showingHandSpell = true }
                         )
-                        .navigationDestination(isPresented: $showingHandTalk) {
-                            HandTalkView()
+                        .navigationDestination(isPresented: $showingHandSpell) {
+                            HandSpellView()
                         }
                     }
                     .padding(.bottom, 100)
