@@ -31,7 +31,7 @@ let package = Package(
                 .portraitUpsideDown
             ],
             capabilities: [
-                .camera(purposeString: "SignQuest uses the camera to recognise hand gestures and translate them to text.")
+                .camera(purposeString: "SignQuest uses the camera to recognize hand gestures and translate them to text.")
             ]
         )
     ],

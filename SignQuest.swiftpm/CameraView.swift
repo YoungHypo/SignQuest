@@ -55,6 +55,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             captureSession.addInput(videoInput)
         }
         
+        // Set video output
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.videoSettings = [
@@ -93,6 +94,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
+        // Detect hand pose
         let handPoseRequest = VNDetectHumanHandPoseRequest()
         handPoseRequest.maximumHandCount = 1
         handPoseRequest.revision = VNDetectContourRequestRevision1
@@ -116,6 +118,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             return
         }
         
+        // Predict hand pose every 30 frames
         if frameCounter % handPosePredictionInterval == 0 {
             guard let keypointsMultiArray = try? handObservations.keypointsMultiArray() else {
                 return
@@ -127,6 +130,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 let model = try ASLRecognizer(configuration: config)
                 let handPosePrediction = try model.prediction(poses: keypointsMultiArray)
                 
+                // Get the highest prediction confidence and label
                 if let highestPrediction = handPosePrediction.labelProbabilities
                     .filter({ $0.value >= 0.85 })
                     .max(by: { $0.value < $1.value }) {

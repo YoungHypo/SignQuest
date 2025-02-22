@@ -23,7 +23,7 @@ struct HandSpellView: View {
     @State private var dictionaryOffset: CGFloat = UIScreen.main.bounds.height
     @State private var selectedLetter = "A"
     
-    // add a struct to track the display status of each letter
+    // A struct to track the display status of each letter
     struct LetterDisplay: Identifiable {
         let id = UUID()
         let letter: String
@@ -120,11 +120,11 @@ struct HandSpellView: View {
                                 .foregroundColor(.blue)
                                 .font(.system(size: 16, weight: .semibold))
                                 .frame(width: 20)
-                            Text("Check ")
+                            Text("Tap ")
                                 .font(.system(size: 16, weight: .regular)) +
-                            Text("Dictionary")
+                            Text("Dict icon")
                                 .font(.system(size: 16, weight: .bold)) +
-                            Text(" in navigation bar for sign gestures")
+                            Text(" on the right navigation bar for sign gestures")
                                 .font(.system(size: 16, weight: .regular))
                         }
                     }

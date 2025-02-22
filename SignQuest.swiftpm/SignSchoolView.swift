@@ -231,7 +231,7 @@ struct SignSchoolView: View {
                                     .scaleEffect(1.8)
                                     .tint(.white)
                                 Text("Loading 3D Model...")
-                                    .font(.system(size: 26))
+                                    .font(.system(size: 22))
                                     .foregroundColor(.white)
                             }
                         }
@@ -412,6 +412,7 @@ struct SignSchoolView: View {
                 .padding(.horizontal)
                 .padding(.top)
                 
+                // LazyVGrid for letter buttons
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 4), spacing: 30) {
                     ForEach(letters, id: \.self) { letter in
                         Button(action: {

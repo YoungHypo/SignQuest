@@ -23,7 +23,7 @@ struct WordPlayView: View {
     @State private var levelPickerOffset: CGFloat = UIScreen.main.bounds.height
     
     // game level settings
-    private let levels = ["HELLO", "WORLD", "APPLE", "WWDC", "LAKE", "BABY"]
+    private let levels = ["AABBCC", "HELLO", "WORLD", "APPLE", "WWDC", "BABY"]
     
     // current word
     private var currentWord: String {
