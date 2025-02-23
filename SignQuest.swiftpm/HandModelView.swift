@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SceneKit
-import RealityKit
 
 struct HandModelView: View {
     let currentLetter: String
