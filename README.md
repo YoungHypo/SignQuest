@@ -31,3 +31,15 @@ gamified practice sessions.
 
 ## Requirements
 - Swift Playgrounds 4.0 or XCode 16.0 or later
+
+## Demo
+[Youtube](https://youtu.be/D48TP0PjnzE)
+
+### HomeScreen
+<img width="536" alt="homescreen" src="https://github.com/user-attachments/assets/5d27be7b-325c-4793-a781-19ba60674b79" />
+
+### SignSchool Mode
+<img width="536" alt="signschool" src="https://github.com/user-attachments/assets/bddfd241-02ec-4168-a731-9671ce0f34ae" />
+
+### 3D Hand Model
+<img width="536" alt="3D model" src="https://github.com/user-attachments/assets/fa80649a-e905-4df1-87f2-8cc0318511da" />
