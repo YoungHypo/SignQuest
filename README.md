@@ -1,37 +1,33 @@
-# SignQuest
+# SignQuest - 2025 Apple Swift Student Challenge Submission
 
-SignQuest is an iOS application designed to help users learn and practice American Sign Language (ASL) through interactive features and real-time hand gesture recognition.
+SignQuest is an interactive ASL (American Sign
+Language) alphabet learning app that helps users
+master ASL letter gestures through real-time hand
+gesture recognition, 3D model demonstrations, and
+gamified practice sessions.
 
 ## Features
 
-### 1. Sign School
-- Learn ASL alphabet (A-Z) through interactive lessons
-- Real-time hand gesture recognition
-- Instant feedback on gesture accuracy
-- Progress tracking and letter selection
-- Practice mode with visual guidance
+### 1. Sign School (Learning Module)
+- Guides users through mastering each ASL letter gesture
+- Provides structured, step-by-step learning with immediate feedback
+- Features both 2D camera-based gesture recognition and 3D hand model viewing
+- Offers detailed gesture instructions with textual descriptions and reference images
 
-### 2. Word Play
-- Fun word-based challenges with increasing difficulty
-- Real-time gesture recognition and feedback
-- Color-coded progress tracking
-- Automatic level progression
+### 2. Word Play (Game Module)
+- Gamifies the learning process through interactive word-spelling challenges
+- Enhances engagement with visual feedback and celebratory animations for successful completions.
 
-### 3. Hand Talk
-- Real-time ASL to text translation
-- Continuous hand gesture recognition
-- Editable text output
-- Support for sentence formation
-- Basic text editing features
+### 3. Hand Spell (Practice Module)
+- Enables users to practice spelling any word using ASL signs
+- Provides a text editor that converts signed gestures into text
+- Includes a built-in dictionary for quick and easy reference
 
 ## Technical Features
-- Built with SwiftUI
-- Uses ARKit for hand tracking
-- CoreML integration for gesture recognition
-- Real-time camera processing
-- High-accuracy gesture detection (90%+ confidence threshold)
+- SwiftUI
+- CoreML & CreateML
+- SceneKit & Reality Composer
+- AVFoundation & Vision
 
 ## Requirements
-- iOS 15.0 or later
-- iPhone with TrueDepth camera system
-- Internet connection for initial setup
+- Swift Playgrounds 4.0 or XCode 16.0 or later
