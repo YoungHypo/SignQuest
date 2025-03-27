@@ -1,4 +1,4 @@
-# SignQuest - 2025 Apple Swift Student Challenge Submission
+# SignQuest: 2025 Apple Swift Student Challenge [Winner]
 
 SignQuest is an interactive ASL (American Sign
 Language) alphabet learning app that helps users
